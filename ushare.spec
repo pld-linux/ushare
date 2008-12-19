@@ -1,15 +1,15 @@
 Summary:	uShare is a UPnP A/V Media Server
 Summary(pl.UTF-8):	uShare jest serwerem mediów A/V UPnP
 Name:		ushare
-Version:	0.9.7
+Version:	1.1a
 Release:	0.1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://ushare.geexbox.org/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	e978c648f808cf1740b1583a78b922ff
-Patch0:		%{name}-rc.d.patch
+# Source0-md5:	5bbcdbf1ff85a9710fa3d4e82ccaa251
 URL:		http://www.geexbox.org/wiki/index.php/UShare
-BuildRequires:	libupnp-devel >= 1.3.1
+BuildRequires:	libupnp-devel >= 1.4.2
+BuildRequires:	libdlna-devel >= 0.2.1
 BuildRequires:  rpmbuild(macros) >= 1.228
 Requires(post,preun):   /sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -25,10 +25,9 @@ który udostępnia urządzeniom UPnP media z informacjami.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-%configure
+./configure --prefix=/usr --bindir=/usr/bin --sysconfdir=/etc --enable-dlna
 %{__make}
 
 %install
@@ -55,7 +54,8 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
-%attr(754,root,root) /etc/rc.d/init.d/%{name}
+#%attr(754,root,root) /etc/rc.d/init.d/%{name}
+%attr(754,root,root) /etc/init.d/ushare
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/ushare.conf
 %attr(755,root,root) /usr/bin/ushare
-%{_mandir}/man1/*
+#%{_mandir}/man1/*
