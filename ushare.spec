@@ -7,6 +7,7 @@ License:	GPL
 Group:		Networking/Daemons
 Source0:	http://ushare.geexbox.org/releases/%{name}-%{version}.tar.bz2
 # Source0-md5:	5bbcdbf1ff85a9710fa3d4e82ccaa251
+Patch0:         %{name}-upnp-build-fix.patch
 URL:		http://www.geexbox.org/wiki/index.php/UShare
 BuildRequires:	libupnp-devel >= 1.4.2
 BuildRequires:	libdlna-devel >= 0.2.1
@@ -25,6 +26,7 @@ który udostępnia urządzeniom UPnP media z informacjami.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 ./configure --prefix=/usr --bindir=/usr/bin --sysconfdir=/etc --enable-dlna
